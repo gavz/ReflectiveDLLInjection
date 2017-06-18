@@ -107,13 +107,13 @@ DLLEXPORT ULONG_PTR WINAPI ReflectiveLoader( VOID )
 	// STEP 1: process the kernels exports for the functions our loader needs...
 
 	// get the Process Enviroment Block
-#ifdef WIN_X64
+#ifdef _WIN64
 	uiBaseAddress = __readgsqword( 0x60 );
 #else
-#ifdef WIN_X86
-	uiBaseAddress = __readfsdword( 0x30 );
-#else WIN_ARM
-	uiBaseAddress = *(DWORD *)( (BYTE *)_MoveFromCoprocessor( 15, 0, 13, 0, 2 ) + 0x30 );
+#ifdef WIN_ARM
+	uiBaseAddress = *(DWORD *)((BYTE *)_MoveFromCoprocessor(15, 0, 13, 0, 2) + 0x30);
+#else _WIN32
+	uiBaseAddress = __readfsdword(0x30);
 #endif
 #endif
 
