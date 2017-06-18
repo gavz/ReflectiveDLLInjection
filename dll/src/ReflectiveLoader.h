@@ -198,6 +198,16 @@ typedef struct
 	WORD	offset:12;
 	WORD	type:4;
 } IMAGE_RELOC, *PIMAGE_RELOC;
+
+/*
+* if one of these assertions fail the compiler is likely using a non default
+* struct member alignment setting
+*/
+#ifdef _WIN64
+C_ASSERT(sizeof(_PEB) == 0x2a0);
+#else _WIN32
+C_ASSERT(sizeof(_PEB) == 0x210);
+#endif
 //===============================================================================================//
 #endif
 //===============================================================================================//
