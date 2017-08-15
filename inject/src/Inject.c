@@ -62,10 +62,13 @@ int main( int argc, char * argv[] )
 	{
 		// Usage: inject.exe [pid] [dll_file]
 
-		if( argc == 1 )
-			dwProcessId = GetCurrentProcessId();
-		else
-			dwProcessId = atoi( argv[1] );
+		if (argc == 1) {
+			printf("Usage:\n  inject.exe [pid] [dll_file]\n");
+			break;
+		}
+		else {
+			dwProcessId = atoi(argv[1]);
+		}
 
 		if( argc >= 3 )
 			cpDllFile = argv[2];
@@ -83,7 +86,8 @@ int main( int argc, char * argv[] )
 			BREAK_WITH_ERROR( "Failed to get the DLL file size" );
 
 		if( ReadFile( hFile, lpBuffer, dwLength, &dwBytesRead, NULL ) == FALSE )
-			BREAK_WITH_ERROR( "Failed to alloc a buffer!" );
+			BREAK_WITH_ERROR( "Failed to allocate a buffer!" );
+		CloseHandle(hFile);
 
 		if( OpenProcessToken( GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken ) )
 		{
